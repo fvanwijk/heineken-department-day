@@ -5,6 +5,7 @@
   "description": "HEINEKEN app for the Agile Developer workshop",
   "main": "index.js",
   "scripts": {
+    "start": "http-server",
     "test": "jest"
   },
   "repository": {
@@ -21,5 +22,8 @@
     "Frank van Wijk <fvanwijk@xebia.com>",
     "Frank Visser <fvisser@xebia.com>"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "0.11.1"
+  }
 }
