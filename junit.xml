@@ -1,0 +1,6 @@
+<testsuites name="jest tests" tests="1" failures="0" time="2.16">
+  <testsuite name="sayHello()" errors="0" failures="0" skipped="0" timestamp="2018-05-18T14:15:48" time="0.32" tests="1">
+    <testcase classname="sayHello() should return &quot;Hello world&quot;" name="sayHello() should return &quot;Hello world&quot;" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>
