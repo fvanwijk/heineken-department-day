@@ -9,7 +9,7 @@
     "start": "webpack-dev-server",
     "test": "jest --watch",
     "test-ci": "jest --ci --coverage",
-    "test-sit": "cypress run"
+    "test-sit": "cypress run --reporter junit"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
   ],
   "authors": [
     "Frank van Wijk <fvanwijk@xebia.com>",
-    "Frank Visser <fvisser@xebia.com>"
+    "Frank Visser <fvisser@xebia.com>",
+    "Jesse Houwing <jhouwing@xpirit.com>"
   ],
   "license": "MIT",
   "devDependencies": {
