@@ -1,0 +1,25 @@
+{
+  "name": "heineken",
+  "private": true,
+  "version": "1.0.0",
+  "description": "HEINEKEN app for the Agile Developer workshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://psd30.visualstudio.com/_git/Heineken"
+  },
+  "keywords": [
+    "HEINEKEN",
+    "Xebia",
+    "agile",
+    "scrum"
+  ],
+  "authors": [
+    "Frank van Wijk <fvanwijk@xebia.com>",
+    "Frank Visser <fvisser@xebia.com>"
+  ],
+  "license": "MIT"
+}
