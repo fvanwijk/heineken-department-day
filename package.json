@@ -9,7 +9,7 @@
     "start": "webpack-dev-server",
     "test": "jest --watch",
     "test-ci": "jest --ci --coverage",
-    "test-sit": "cypress run --reporter junit"
+    "test-sit": "cypress run --reporter junit --reporter-options mochaFile=./cypress/testresults/junit.xml"
   },
   "repository": {
     "type": "git",

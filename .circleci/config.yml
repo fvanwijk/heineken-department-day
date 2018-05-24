@@ -4,70 +4,65 @@
 #
 version: 2
 jobs:
-  checkout:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.6.0-browsers
-    steps:
-      # Using the `checkout` step, CircleCI will checkout your repository
-      - checkout
-
-      # Using the `persist_to_workspace` step, CircleCI will store your changes for the next job
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - ./*
   test:
     docker:
-      - image: circleci/node:8.6.0-browsers
+      - image: circleci/node:8.11-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
+    working_directory: ~/app
     steps:
-      # Download and cache dependencies
-      - attach_workspace:
-          at: ~/
+      - checkout
       - restore_cache:
           keys:
-            - node-modules-{{ checksum "package-lock.json" }}
-            - node-modules-
-
+            - v1-node-modules-{{ checksum "package.json" }}
       - run: npm install
-
       - save_cache:
           paths:
             - node_modules
-          key: node-modules-{{ checksum "package-lock.json" }}
-
-      - run: npm run test-ci
+          key: v1-node-modules-{{ checksum "package.json" }}
       - persist_to_workspace:
-          root: ~/
+          root: ~/app
           paths:
-            - ./*
+            - node_modules
+            - cypress
+            - cypress.json
+            - package.json
+      - run: npm run test-ci
   deploy:
     docker:
-      - image: circleci/node:8.6.0-browsers
+      - image: circleci/node:8.11-browsers
+    working_directory: ~/app
     steps:
+      - checkout
       - attach_workspace:
-          at: ~/
+          at: ~/app
       - run: npm run build
       - run: npx now ./dist --token $NOW_TOKEN --public
       - run: cd dist && npx now alias set heineken-team.now.sh --token $NOW_TOKEN
   e2e:
     docker:
-      - image: cypress/base:6
+      - image: cypress/base:8
         environment:
           ## this enables colors in the output
           TERM: xterm
           CYPRESS_BASE_URL: https://heineken-team.now.sh
+    working_directory: ~/app
     steps:
       - attach_workspace:
-          at: ~/
-      - run: npm install
-      - run: npm run test-sit
+          at: ~/app
+      - run:
+          name: Running E2E tests
+          command: npm run test-sit
+      - store_test_results:
+          path: cypress/testresults
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
 
 workflows:
@@ -77,10 +72,7 @@ workflows:
   # Define the `commit` workflow
   commit:
     jobs:
-      - checkout
-      - test:
-          requires:
-            - checkout
+      - test
       - deploy:
           requires:
             - test
